@@ -21,7 +21,7 @@
 	define('ENVIRONMENT', 'development');
 /*
  *---------------------------------------------------------------
- * ERROR REPORTING bhoechie"//ss
+ * ERROR REPORTING bhoechie"//ssss
  *---------------------------------------------------------------
  *
  * Different environments will require different levels of error reporting.
