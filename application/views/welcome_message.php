@@ -3,7 +3,7 @@
 	<article>    
 		<section class="clearfix left-align">
 			<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-			<?
+			<?php
 				foreach($form as $keys){
 					echo $keys;
 				}
