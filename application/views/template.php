@@ -32,6 +32,7 @@
 						</figure>
 					</section>      
 				</article> 
+
 				<nav class="clearfix">
 					<?=$navigation?>
 				</nav><br><br>
@@ -61,33 +62,33 @@
 		</div>
 		<br><br>
 		<footer class="footer">
-			©Copyright 2013 Barbe-Kost All Right Reserved. All content of their respective Cloud Circle Technology. 
+			Copyright 2013 Barbe-Kost All Right Reserved. All content of their respective Cloud Circle Technology. 
 			Use of this Web site constitutes acceptance of the Barberkost <a href='#Apple'>User Agreement</a> and <a href='#'>Privacy Policy</a>.
 		</footer>
 	</body>
 </html>
-		<script src="<?=base_url('resource/js/jquery.min.js')?>" ></script>  
-		<script>
-			var current=""; 
-			function initMenu() {
-			  $('#menu ul').hide(); 
-			  if ($('#menu li').has('ul')) $('#menu ul').prev().addClass('expandable'); 
-			  $('.expandable').click(
-				function() {
-					if(current!=$(this).html()){
-						$('.current').next().slideToggle();
-						$('.current').removeClass('expanded');
-						$('.current').removeClass('current');
-					}
-					$(this).next().slideToggle();
-					$(this).toggleClass('expanded');
-					$(this).toggleClass('current');
-					current=$(this).html();
-				  }
-				);
-			  }
-			$(document).ready(function() {
-					initMenu();
+<script src="<?=base_url('resource/js/jquery.min.js')?>" ></script>  
+<script>
+	var current=""; 
+	function initMenu() {
+		  $('#menu ul').hide(); 
+		  if ($('#menu li').has('ul')) $('#menu ul').prev().addClass('expandable'); 
+		  $('.expandable').click(
+			function() {
+				if(current!=$(this).html()){
+					$('.current').next().slideToggle();
+					$('.current').removeClass('expanded');
+					$('.current').removeClass('current');
 				}
-			);    
-		</script>
+				$(this).next().slideToggle();
+				$(this).toggleClass('expanded');
+				$(this).toggleClass('current');
+				current=$(this).html();
+			  }
+			);
+		  }
+		$(document).ready(function() {
+				initMenu();
+			}
+		);    
+</script>

@@ -175,8 +175,13 @@ if ( ! function_exists('form_input'))
 	function form_input($data = '', $value = '', $extra = '')
 	{
 		$defaults = array('type' => 'text', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
-
-		return "<input "._parse_form_attributes($data, $defaults).$extra." />";
+		$callback="<fieldset>";
+		if(!empty($data['label']))
+			$callback.="<label>".$data['label']."</label>";
+		$callback.="<input "._parse_form_attributes($data, $defaults).$extra." />";
+		if(!empty($data['help']))
+			$callback.="<p class='help'>".$data['help']."</p>";
+		return $callback."</fieldset>";
 	}
 }
 
@@ -325,8 +330,10 @@ if ( ! function_exists('form_dropdown'))
 		if ($extra != '') $extra = ' '.$extra;
 
 		$multiple = (count($selected) > 1 && strpos($extra, 'multiple') === FALSE) ? ' multiple="multiple"' : '';
-
-		$form = '<select name="'.$name.'"'.$extra.$multiple.">\n";
+		$form='<fieldset>';
+		if(!empty($extra['label']))
+			$form .="<label>".$extra['label']."</label>";
+		$form .='<select name="'.$name.'"'.$extra.$multiple.">\n";
 
 		foreach ($options as $key => $val)
 		{
@@ -352,8 +359,10 @@ if ( ! function_exists('form_dropdown'))
 				$form .= '<option value="'.$key.'"'.$sel.'>'.(string) $val."</option>\n";
 			}
 		}
-
 		$form .= '</select>';
+		if(!empty($extra['help']))
+			$form.="<p class='help'>".$extra['help']."</p>";
+		$form .= '</fieldset>';
 
 		return $form;
 	}
