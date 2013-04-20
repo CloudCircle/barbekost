@@ -5,7 +5,7 @@ class Welcome extends CI_Controller {
 	function Welcome(){
 		parent::__construct();
 		$this->load->helper(array('file'));
-		$this->load->model('Books',NULL, TRUE);	
+    
 	}
 
 	public function index()
@@ -18,7 +18,7 @@ class Welcome extends CI_Controller {
 		$data["form"]= $this->formRegister();
 		$this->template->write_view('content', 'welcome_message',$data);
 		//$this->template->write_view('sidebar', '/layout/sidebar');
-		//$this->template->write_view('footer', '/layout/footer');
+		$this->template->write_view('footer', '/layout/footer');
 		$this->template->render();
 	}
 
@@ -26,36 +26,122 @@ class Welcome extends CI_Controller {
 
 		$form=array();
 		$attributes = array('id' => 'inputs');
-		array_push($form,form_open('email/send',$attributes));
+		array_push($form,form_open_multipart('userform/addexkoster'));
+
 		$attr = array(
-		        'name'        => 'email',
-		        'id'          => 'email',
-		        'type'        => 'email',
-		        'value'       => 'johndoe',
+		        'name'        => 'firstname',
+		        'id'		  => 'prependedInput',
+		        'class'       => 'input-xlarge',
+		        'type'        => 'text',
 		        'label'       => 'Username',
-		        'title'   	  => 'Isilah dengan nama terlebih dahulu',
-		        'help'   	  => 'Isilah dengan nama terlebih dahulu',
+		        'title'   	  => 'Masukkan firstname terlebih dahulu',
 		        'required'	  => 'true',
-		        'placeholder' => 'Username',
+		        'placeholder' => 'Firstname',
+		        'icon'		  => 'icon-user'
 		);
 		array_push($form,form_input($attr) );
+
 		$attr = array(
-		        'label'       => 'johndoe',
+		        'name'        => 'lastname',
+		        'id'		  => 'prependedInput',
+		        'class'       => 'input-xlarge',
+		        'type'        => 'text',
+		        'title'   	  => 'Masukkan lastname terlebih dahulu',
+		        'placeholder' => 'lastname',
+		        'icon'		  => 'icon-user'
 		);
-		array_push( $form, form_dropdown('category', $this->Books->get_dropdown(),array(),
+		array_push($form,form_input($attr) );
+
+		$attr = array(
+		        'name'        => 'email',
+		        'id'		  => 'prependedInput',
+		        'class'       => 'input-xlarge',
+		        'type'        => 'email',
+		        'label'       => 'Email',
+		        'title'   	  => 'Masukkan email terlebih dahulu',
+		        'required'	  => 'true',
+		        'placeholder' => 'Email',
+		);
+		array_push($form,form_input($attr) );
+
+		$attr = array(
+		        'name'        => 'alamat',
+		        'id'		  => 'prependedInput',
+		        'class'       => 'input-xxlarge',
+		        'type'        => 'text',
+		        'label'       => 'Address',
+		        'title'   	  => 'Masukkan alamatmu',
+		        'placeholder' => 'Address',
+		        'icon'		  => 'icon-home'
+		);
+		array_push($form,form_input($attr) );
+
+		$attr = array(
+		        'name'        => 'phone',
+		        'id'		  => 'prependedInput',
+		        'class'       => 'input-large',
+		        'type'        => 'text',
+		        'label'       => 'Phone',
+		        'title'   	  => 'Masukkan no telephone terlebih dahulu',
+		        'required'	  => 'true',
+		        'placeholder' => 'Phone number',
+		        'icon'		  => 'icon-signal'
+		);
+		array_push($form,form_input($attr) );
+
+		$attr = array(
+		        'name'        => 'password',
+		        'id'		  => 'prependedInput',
+		        'class'       => 'input-large',
+		        'type'        => 'password',
+		        'label'       => 'Password',
+		        'title'   	  => 'Masukkan password terlebih dahulu',
+		        'required'	  => 'true',
+		        'placeholder' => 'Password',
+		        'icon'		  => 'icon-lock'
+		);
+		array_push($form,form_input($attr) );
+
+		$attr = array(
+		        'label'       => 'Regions',
+		        'class'       => 'span2',
+		        'title'   	  => 'Choose Regions First',
+		        'class'		  => 'long',
+		);
+		array_push( $form, form_dropdown('Regions', $this->get_dropdown(),"0",
 		        $attr));
+
+		$attr = array(
+		        'label'       => 'City',
+		        'class'       => 'span2',
+		        'title'   	  => 'Choose City First',
+		        'class'		  => 'long',
+		);
+		array_push( $form, form_dropdown('City', $this->get_dropdown(),"0",
+		        $attr));
+
 		$attr = array(
 		        'name'        => 'save',
 		        'type'        => 'submit',
 		        'label'       => 'johndoe',
-		        'content'     => 'save',
-		        'class'       => 'button save',
+		        'content'     => 'Register Now',
+		        'icon'		  => 'save',
+		        'class'       => 'btn btn-success btn-large',
 		);
 		array_push( $form, form_button($attr));
 		array_push( $form, form_close());
 		return $form;
 	}
-}
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+	 public function get_dropdown() {
+        $p = new Provinsi();
+        $p->get_by_id(12);
+        $p->kota->get_iterated();
+        $dropdown = array('0' => 'Choose Regions');
+		foreach( $p->kota as $c ){
+           	$dropdown[$c->id] = $c->nama_kota;
+		}
+        
+        return $dropdown;
+    }
+}

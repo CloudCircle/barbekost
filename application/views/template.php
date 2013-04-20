@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
+<link rel="stylesheet" media="screen" href="<?php echo base_url('resource/bootstrap/css/bootstrap.css');?>" >
 <link rel="stylesheet"  href="<?php echo base_url('resource/css/theme.css');?>" >
 <link rel="stylesheet"  href="<?php echo base_url('resource/css/core.css');?>" >
 <link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css'> 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="in">
-    <head>
-
+    <head lang="en">
         <title><?php echo $title ?></title>
         <meta http-equiv="Content-Type" content="text/html"/>		
     </head>
@@ -64,29 +64,15 @@
 		</div>
 		<br><br>
 		<footer class="footer">
-			Copyright 2013 Barbe-Kost All Right Reserved. All content of their respective Cloud Circle Technology. 
-			Use of this Web site constitutes acceptance of the Barberkost <a href='#Apple'>User Agreement</a> and <a href='#'>Privacy Policy</a>.
+				<?php echo $footer; ?>	
 		</footer>
 	</body>
 </html>
-<script src="<?php echo base_url('resource/js/jquery.min.js')?>" ></script>  
+<script src="<?php echo base_url('resource/js/jquery.js')?>" ></script>  
+<script src="<?php echo base_url('resource/bootstrap/js/bootstrap.min.js')?>" ></script>  
+<script src="<?php echo base_url('resource/js/bbk_deploy.js')?>" ></script>  
 <script>
-			var current=""; 
-			function initMenu() {
-			  $('#menu ul').hide(); 
-			  if ($('#menu li').has('ul')) $('#menu ul').prev().addClass('expandable'); 
-			  $('.expandable').click(
-				function() {
-					if(current!=$(this).html()){
-						$('.current').next().slideToggle();
-						$('.current').removeClass('expanded');
-						$('.current').removeClass('current');
-					}
-					$(this).next().slideToggle();
-					$(this).toggleClass('expanded');
-					$(this).toggleClass('current');
-					current=$(this).html();
-				  }
-				);
-  }
-		</script>
+	$(document).ready(function() {
+		initMenu();
+	}); 
+</script>

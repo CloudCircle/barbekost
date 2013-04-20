@@ -18,12 +18,12 @@
 			<li><a href="#">Situbondo</a></li>                
 		</ul>
 	</li>
-	<li><a href="#">Message</a></li>
+	<li><a href="<?php echo site_url('/regristrasi')?>">Registrasi</a></li>
 	<li>
 		<a>Pilih Bahasa</a>
 		<ul>
-          	<li><a href="<?php echo site_url('/language/changeLanguage/indonesia')?>" hreflang="indonesia">Indonesia</a></li>  
-			<li><a href="<?php echo site_url('/language/changeLanguage/english')?>" hreflang="en">English</a></li>     
+          	<li><a href="<?php echo site_url('/language/changeLanguage/in')?>" hreflang="in">Indonesia</a></li>  
+			<li><a href="<?php echo site_url('/language/changeLanguage/english')?>" hreflang="english">English</a></li>     
 		</ul>
 	</li>
 	<li ><a href="#">Setting</a></li>                   

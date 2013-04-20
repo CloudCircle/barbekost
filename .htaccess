@@ -1,19 +1,76 @@
 # BEGIN Expire headers
 <ifModule mod_expires.c>
-        ExpiresActive On
-        ExpiresDefault "access plus 5 seconds"
-        ExpiresByType image/x-icon "access plus 2592000 seconds"
-        ExpiresByType image/jpeg "access plus 2592000 seconds"
-        ExpiresByType image/png "access plus 2592000 seconds"
-        ExpiresByType image/gif "access plus 2592000 seconds"
-        ExpiresByType application/x-shockwave-flash "access plus 2592000 seconds"
-        ExpiresByType text/css "access plus 604800 seconds"
-        ExpiresByType text/javascript "access plus 216000 seconds"
-        ExpiresByType application/javascript "access plus 216000 seconds"
-        ExpiresByType application/x-javascript "access plus 216000 seconds"
-        ExpiresByType text/html "access plus 600 seconds"
-        ExpiresByType application/xhtml+xml "access plus 600 seconds"
+          ExpiresActive On
+          ExpiresDefault A0
+          ExpiresDefault "access plus 5 seconds"
+          ExpiresByType image/x-icon "access plus 2592000 seconds"
+          ExpiresByType image/jpeg "access plus 2592000 seconds"
+          ExpiresByType image/png "access plus 2592000 seconds"
+          ExpiresByType image/gif "access plus 2592000 seconds"
+          ExpiresByType application/x-shockwave-flash "access plus 2592000 seconds"
+          ExpiresByType text/css "access plus 2592000 seconds"
+          ExpiresByType text/javascript "access plus 2592000 seconds"
+          ExpiresByType application/javascript "access plus 2592000 seconds"
+          ExpiresByType application/x-javascript "access plus 2592000 seconds"
+          ExpiresByType text/html "access plus 600 seconds"
+          ExpiresByType application/xhtml+xml "access plus 600 seconds"
+                 
+                # 1 YEAR
+                <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
+                ExpiresDefault A29030400
+                </FilesMatch>
+                 
+                # 1 WEEK
+                <FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
+                ExpiresDefault A604800
+                </FilesMatch>
+                 
+                # 3 HOUR
+                <FilesMatch "\.(txt|xml|js|css)$">
+                ExpiresDefault A10800
+                </FilesMatch>
 </ifModule>
-#RewriteEngine on
-#RewriteCond $1 !^(index\.php|images|robots\.txt)
-#RewriteRule ^(.*)$ /index.php/$1 [L]
+<ifModule mod_deflate.c>
+#The following lines are to avoid bugs with some browsers
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE text/ttf
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/ttf
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript 
+AddOutputFilterByType DEFLATE application/x-httpd-php
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip
+Header append Vary User-Agent env=!dont-vary
+</ifModule>
+<IfModule mod_gzip.c>
+    mod_gzip_on       Yes
+    mod_gzip_dechunk  Yes
+    mod_gzip_item_include file      \.(html?|txt|css|js|php|pl|ttf)$
+    mod_gzip_item_include handler   ^cgi-script$
+    mod_gzip_item_include mime      ^text/.*
+    mod_gzip_item_include mime      ^application/ttf.*
+    mod_gzip_item_include mime      ^application/javascript.*
+    mod_gzip_item_include mime      ^application/x-javascript.*
+    mod_gzip_item_include mime      ^application/x-httpd-php
+    mod_gzip_item_exclude mime      ^image/.*
+    mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
+</IfModule>
+<ifModule mod_headers.c>
+    Header set Connection keep-alive
+        AddDefaultCharset UTF-8;
+        DefaultLanguage id
+</ifModule>
+Options +FollowSymLinks
+RewriteEngine on
+RewriteCond $1 !^(index\.php|images|robots\.txt|sitemap\.xml|google9724ec8442a0b2e2\.html|resource/|user_guide/)
+RewriteRule ^(.*)$ /index.php/$1 [L]

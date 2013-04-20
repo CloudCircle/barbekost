@@ -172,15 +172,24 @@ if ( ! function_exists('form_hidden'))
  */
 if ( ! function_exists('form_input'))
 {
-	function form_input($data = '', $value = '', $extra = '')
+	function form_input($data = '', $value = '')
 	{
 		$defaults = array('type' => 'text', 'name' => (( ! is_array($data)) ? $data : ''), 'value' => $value);
-		$callback="<fieldset>";
+		$icon="icon-envelope";
+		if ( is_array($data) AND isset($data['icon']))
+		{
+			$icon = $data['icon'];
+			unset($data['icon']); // content is not an attribute
+		}
+
+		$callback="<fieldset >";
 		if(!empty($data['label']))
 			$callback.="<label>".$data['label']."</label>";
-		$callback.="<input "._parse_form_attributes($data, $defaults).$extra." />";
+		$callback.="<div class='input-prepend'>
+					<span class='add-on'><i class='".$icon."'></i></span>
+					<input "._parse_form_attributes($data, $defaults)." /></div>";
 		if(!empty($data['help']))
-			$callback.="<p class='help'>".$data['help']."</p>";
+			$callback.="<p class='help-block'>".$data['help']."</p>";
 		return $callback."</fieldset>";
 	}
 }
@@ -317,6 +326,7 @@ if ( ! function_exists('form_dropdown'))
 			$selected = array($selected);
 		}
 
+
 		// If no selected state was submitted we will attempt to set it automatically
 		if (count($selected) === 0)
 		{
@@ -327,13 +337,13 @@ if ( ! function_exists('form_dropdown'))
 			}
 		}
 
-		if ($extra != '') $extra = ' '.$extra;
 
+		$defaults = array('id' => (( ! is_array($extra)) ? $extra : ''));
 		$multiple = (count($selected) > 1 && strpos($extra, 'multiple') === FALSE) ? ' multiple="multiple"' : '';
 		$form='<fieldset>';
 		if(!empty($extra['label']))
 			$form .="<label>".$extra['label']."</label>";
-		$form .='<select name="'.$name.'"'.$extra.$multiple.">\n";
+		$form .='<select name="'.$name.'"'._parse_form_attributes($extra,$defaults).$multiple.">\n";
 
 		foreach ($options as $key => $val)
 		{
@@ -497,14 +507,19 @@ if ( ! function_exists('form_button'))
 	function form_button($data = '', $content = '', $extra = '')
 	{
 		$defaults = array('name' => (( ! is_array($data)) ? $data : ''), 'type' => 'button');
-
+		$icon="";
 		if ( is_array($data) AND isset($data['content']))
 		{
 			$content = $data['content'];
 			unset($data['content']); // content is not an attribute
 		}
+		if ( is_array($data) AND isset($data['icon']))
+		{
+			$icon = $data['icon'];
+			unset($data['icon']); // content is not an attribute
+		}
 
-		return "<button "._parse_form_attributes($data, $defaults).$extra.">".$content."</button>";
+		return "<button "._parse_form_attributes($data, $defaults).$extra."><i class='".$icon."'></i>&nbsp;&nbsp;".$content."</button>";
 	}
 }
 

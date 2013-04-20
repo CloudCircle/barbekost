@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('template','session','config');
+$autoload['libraries'] = array('template','session','config',"database","datamapper");
 
 
 /*
@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array("bbk_general");
+$autoload['language'] = array("general");
 
 
 /*
